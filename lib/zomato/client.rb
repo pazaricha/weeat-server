@@ -29,7 +29,7 @@ module Zomato
             zomato_restaurant_id: real_restaurant['id'],
             name: real_restaurant['name'],
             address: real_restaurant['location']['address'],
-            maximum_delivery_time: [15, 30, 45, 60, 75, 90, 105, 120].sample,
+            maximum_delivery_time: ENV['delivery_times'].split(', ').sample,
             cuisine: real_restaurant['cuisines'].split(', ').first,
             rating: real_restaurant['user_rating']['aggregate_rating'],
             tenbis: [true, false].sample
