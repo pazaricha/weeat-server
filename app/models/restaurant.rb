@@ -9,6 +9,8 @@
 #  name                  :string
 #  rating                :decimal(2, 1)    default(0.0)
 #  tenbis                :boolean          default(FALSE)
+#  weeat_rating          :decimal(2, 1)    default(0.0)
+#  zomato_rating         :decimal(2, 1)    default(0.0)
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  zomato_restaurant_id  :integer
@@ -20,5 +22,20 @@
 
 class Restaurant < ApplicationRecord
   validates :name, :address, :cuisine, :maximum_delivery_time, presence: true
-  validates :rating, numericality: { only_integer: false, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
+  validates :rating, :zomato_rating, :weeat_rating, numericality: { only_integer: false, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
+
+  has_many :reviews
+
+  private
+
+  def recalculate_ratings!
+    return if reviews.blank?
+    all_reviews_average_rating = reviews.sum(:rating) / BigDecimal(reviews.size)
+
+    self.rating = (rating + all_reviews_average_rating) / 2
+
+    puts "rating: ***** #{rating}"
+
+    save!
+  end
 end

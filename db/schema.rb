@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_07_131807) do
+ActiveRecord::Schema.define(version: 2018_05_08_132413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,19 @@ ActiveRecord::Schema.define(version: 2018_05_07_131807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "zomato_restaurant_id"
+    t.decimal "zomato_rating", precision: 2, scale: 1, default: "0.0"
+    t.decimal "weeat_rating", precision: 2, scale: 1, default: "0.0"
     t.index ["zomato_restaurant_id"], name: "index_restaurants_on_zomato_restaurant_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "reviwer_name"
+    t.integer "rating"
+    t.text "comment"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
   end
 
 end
