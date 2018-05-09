@@ -32,6 +32,7 @@ module Zomato
           params: { start: start_offset, count: 20, entity_id: @city_id, entity_type: 'city' }
         }
       )
+
       JSON.parse(response.body)['restaurants']
     end
 

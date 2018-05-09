@@ -9,7 +9,7 @@ RSpec.describe Restaurant, type: :model do
       create(:review, restaurant: restaurant, rating: 5)
       a = build(:review, restaurant: restaurant, rating: 1)
 
-      restaurant.send(:recalculate_ratings!)
+      restaurant.recalculate_ratings!
       expect(restaurant.rating).to eq(2.8)
     end
   end

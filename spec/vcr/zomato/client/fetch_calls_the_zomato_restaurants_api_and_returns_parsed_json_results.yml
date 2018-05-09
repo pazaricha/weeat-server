@@ -1,0 +1,173 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://developers.zomato.com/api/v2.1/search?count=20&entity_id=280&entity_type=city&start=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin17.5.0 x86_64) ruby/2.3.1p112
+      User-Key:
+      - bbf0625652b7e379a027a499763589a4
+      Host:
+      - developers.zomato.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3713'
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block; report=https://www.zomato.com/cspreport.php
+      Content-Security-Policy:
+      - frame-ancestors https://*.nearbuystag.in https://*.nearbuy.com 'self'; default-src
+        *; font-src * data:; img-src * data:; media-src * blob:; script-src 'self'
+        'unsafe-inline' 'unsafe-eval' *.cloudflare.com *.twitter.com *.recruiterbox.com
+        *.zdev.net *.zdev.net:8080 *.zomato.com *.tinymce.com *.gstatic.com *.googleapis.com
+        *.google.com *.facebook.com sdk.accountkit.com *.doubleclick.net *.googlesyndication.com
+        *.nr-data.net *.newrelic.com *.google-analytics.com *.akamaihd.net *.zmtcdn.com
+        *.googletagmanager.com *.facebook.net *.googleadservices.com *.cdninstagram.com
+        *.googlesyndication.com *.inspectlet.com *.spreedly.com *.instagram.com *.twimg.com
+        *.mouseflow.com *.usersnap.com d3mvnvhjmkxpjz.cloudfront.net *.serving-sys.com
+        *.sushissl.com *.pubnub.com tsgw.tataelxsi.co.in *.branch.io app.link cdn.poll-maker.com
+        *.ampproject.org *.smartlook.com *.hotjar.com dashboard.hypertrack.io zba.se
+        *.googletagmanager.com *.eff.org cdn.plot.ly *.zedo.com *.bing.com *.criteo.net
+        *.criteo.com; style-src * 'unsafe-inline';
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, PUT, PATCH, OPTIONS
+      Access-Control-Allow-Headers:
+      - X-Zomato-API-Key
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Server:
+      - Zomato
+      Expires:
+      - Wed, 09 May 2018 11:31:37 GMT
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 09 May 2018 11:31:37 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - AKA_A2=1; expires=Wed, 09-May-2018 12:31:37 GMT; secure; HttpOnly
+      - PHPSESSID=8b2c557b233a854129f4b2b7a59296723005d4c0; path=/; domain=.zomato.com;
+        secure; HttpOnly
+      - csrf=d6c18f8637ee98deef1d5b4db7b4f715; expires=Wed, 09-May-2018 11:55:37 GMT;
+        Max-Age=1440; path=/; domain=.zomato.com
+      - fbcity=86; expires=Mon, 05-Nov-2018 11:31:37 GMT; Max-Age=15552000; path=/;
+        domain=.zomato.com; secure
+      - fbtrack=dc968252b5d8eb6547affa28cc7eec10; expires=Sat, 04-May-2019 11:31:37
+        GMT; Max-Age=31104000; path=/; domain=.zomato.com; secure
+      - zl=en; expires=Mon, 05-Nov-2018 11:31:37 GMT; Max-Age=15552000; path=/; domain=.zomato.com;
+        secure
+      Cache-Control:
+      - max-age=0, no-cache, no-store, no-transform
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        xnZ1pymOtV21Dxz99eP/U7pJuUWAAAA=
+    http_version: 
+  recorded_at: Wed, 09 May 2018 11:31:37 GMT
+recorded_with: VCR 4.0.0
