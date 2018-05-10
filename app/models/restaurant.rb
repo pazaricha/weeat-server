@@ -29,13 +29,40 @@ class Restaurant < ApplicationRecord
   has_many :reviews
 
   def recalculate_ratings!
-    # return if reviews.blank?
-    # all_reviews_average_rating = reviews.sum(:rating) / BigDecimal(reviews.size)
+    calculate_and_set_weeat_rating
 
-    # self.rating = (rating + all_reviews_average_rating) / 2
+    self.rating = if has_both_weeat_rating_and_zomato_rating?
+                    (weeat_rating + zomato_rating) / 2
+                  elsif has_only_weeat_rating?
+                    weeat_rating
+                  elsif has_only_zomato_rating?
+                    zomato_rating
+                  else
+                    0
+                  end
 
-    # puts "rating: ***** #{rating}"
+    save!
+  end
 
-    # save!
+  private
+
+  def calculate_and_set_weeat_rating
+    self.weeat_rating = if reviews.present?
+                          reviews.sum(:rating) / BigDecimal(reviews.size)
+                        else
+                          0
+                        end
+  end
+
+  def has_both_weeat_rating_and_zomato_rating?
+    weeat_rating > 0 && zomato_rating > 0
+  end
+
+  def has_only_weeat_rating?
+    weeat_rating > 0 && zomato_rating == 0
+  end
+
+  def has_only_zomato_rating?
+    zomato_rating > 0 && weeat_rating == 0
   end
 end

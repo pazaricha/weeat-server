@@ -19,6 +19,7 @@ class Review < ApplicationRecord
   belongs_to :restaurant
 
   after_create :recalculate_restaurant_ratings
+  after_destroy :recalculate_restaurant_ratings
 
   private
 
