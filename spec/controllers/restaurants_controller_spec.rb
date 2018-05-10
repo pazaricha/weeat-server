@@ -26,19 +26,21 @@ RSpec.describe RestaurantsController, type: :controller do
 
   describe 'POST #create' do
     context 'when called with valid params' do
-      let(:restaurant_params) { attributes_for(:restaurant) }
+      let(:valid_restaurant_params) { attributes_for(:restaurant) }
 
-      it 'creates the restaurant and returns proper status' do
-        post :create, params: { restaurant: restaurant_params }
+      it "creates the restaurant and returns the 'created' status" do
+        post :create, params: { restaurant: valid_restaurant_params }
 
         expect(response).to have_http_status(:created)
-        expect(Restaurant.last.name).to eq(restaurant_params[:name])
+        expect(Restaurant.last.name).to eq(valid_restaurant_params[:name])
       end
     end
 
     context 'when called with invalid params' do
-      it 'does not create the restaurant and returns proper status' do
-        post :create, params: { restaurant: attributes_for(:restaurant, name: nil) }
+      let(:invalid_restaurant_params) { attributes_for(:restaurant, name: nil) }
+
+      it "does not create the restaurant and returns the 'unprocessable_entity' status" do
+        post :create, params: { restaurant: invalid_restaurant_params }
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(Restaurant.all.size).to eq(0)
