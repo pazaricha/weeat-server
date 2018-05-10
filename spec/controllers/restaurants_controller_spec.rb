@@ -47,5 +47,4 @@ RSpec.describe RestaurantsController, type: :controller do
       end
     end
   end
-
 end
