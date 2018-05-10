@@ -4,6 +4,6 @@ FactoryBot.define do
     cuisine { ['American', 'Asian', 'BBQ', 'Fast Food', 'Pizza'].sample }
     tenbis { [true, false].sample }
     address { "#{Faker::Address.street_address} #{Faker::Address.street_suffix}, #{Faker::Address.city} #{Faker::Address.zip_code}" }
-    maximum_delivery_time { ENV['delivery_times'].split(', ').sample }
+    maximum_delivery_time { ENV['DELIVERY_TIMES'].split(', ').sample }
   end
 end

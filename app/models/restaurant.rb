@@ -47,11 +47,7 @@ class Restaurant < ApplicationRecord
   private
 
   def calculate_and_set_weeat_rating
-    self.weeat_rating = if reviews.present?
-                          reviews.sum(:rating) / BigDecimal(reviews.size)
-                        else
-                          0
-                        end
+    self.weeat_rating = reviews.present? ? reviews.sum(:rating) / BigDecimal(reviews.size) : 0
   end
 
   def has_both_weeat_rating_and_zomato_rating?

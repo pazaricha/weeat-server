@@ -7,7 +7,7 @@ module Zomato
     def initialize(options = {})
       @restaurants = []
       @city_id = options[:city_id] || NEW_YORK_CITY_ID
-      @api_key = options[:api_key] || ENV['zomato_api_key']
+      @api_key = options[:api_key] || ENV['ZOMATO_API_KEY']
     end
 
     def search_restaurants
@@ -44,10 +44,9 @@ module Zomato
           zomato_restaurant_id: real_restaurant['id'],
           name: real_restaurant['name'],
           address: real_restaurant['location']['address'],
-          maximum_delivery_time: ENV['delivery_times'].split(', ').sample,
+          maximum_delivery_time: ENV['DELIVERY_TIMES'].split(', ').sample,
           cuisine: real_restaurant['cuisines'].split(', ').first,
-          zomato_rating: real_restaurant['user_rating']['aggregate_rating'],
-          tenbis: false
+          zomato_rating: real_restaurant['user_rating']['aggregate_rating']
         }
       end
     end
