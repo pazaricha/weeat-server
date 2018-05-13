@@ -21,8 +21,36 @@ RSpec.describe Zomato::Syncer do
     end
   end
 
+  describe :find_or_create_cuisine_and_update_restaurant_hash do
+    let(:example_restaurants_hash) { example_restaurants.first }
+
+    context 'when a cuisine with the same name already exists' do
+      it 'find the cuisine and update the restaurant hash to have a cuisine_id key instead of cuisine key' do
+        existing_cuisine = create(:cuisine, name: example_restaurants_hash[:cuisine])
+
+        expect{ subject.send(:find_or_create_cuisine_and_update_restaurant_hash, example_restaurants_hash) }.not_to change{ Cuisine.all.size }
+
+        expect(example_restaurants_hash[:cuisine]).to be_nil
+        expect(example_restaurants_hash[:cuisine_id]).to eq(existing_cuisine.id)
+      end
+    end
+
+    context 'when a cuisine with the same name does not exist' do
+      it 'creates the cuisine and update the restaurant hash appropriately' do
+        expect{ subject.send(:find_or_create_cuisine_and_update_restaurant_hash, example_restaurants_hash) }.to change{ Cuisine.all.size }.from(0).to(1)
+
+        expect(example_restaurants_hash[:cuisine]).to be_nil
+        expect(example_restaurants_hash[:cuisine_id]).to be_present
+      end
+    end
+  end
+
   describe :sync_restaurant do
     let(:example_restaurants_hash) { example_restaurants.first }
+
+    before(:each) do
+      subject.send(:find_or_create_cuisine_and_update_restaurant_hash, example_restaurants_hash)
+    end
 
     context 'when a restaurant with the same zomato_restaurant_id does not exist' do
       it 'creates the restaurant' do
