@@ -41,12 +41,15 @@ module Zomato
         real_restaurant = restaurant['restaurant']
 
         restaurants << {
-          zomato_restaurant_id: real_restaurant['id'],
           name: real_restaurant['name'],
           address: real_restaurant['location']['address'],
           maximum_delivery_time: ENV['DELIVERY_TIMES'].split(', ').sample,
           cuisine: real_restaurant['cuisines'].split(', ').first,
-          zomato_rating: real_restaurant['user_rating']['aggregate_rating']
+          meta_data: {
+            zomato_restaurant_id: real_restaurant['id'],
+            rating: real_restaurant['user_rating']['aggregate_rating'],
+            votes: real_restaurant['user_rating']['votes']
+          }
         }
       end
     end

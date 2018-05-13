@@ -22,7 +22,14 @@ RSpec.describe Zomato::Client do
 
   describe :transform_and_populate do
     let(:example_resturants_raw) { JSON.parse(File.read('spec/support/sample_restaurants_raw.json')) }
-    let(:example_resturants_transformed) { JSON.parse(File.read('spec/support/sample_restaurants_transformed.json')).each(&:symbolize_keys!) }
+    let(:example_resturants_transformed) do
+      resturants_transformed = JSON.parse(File.read('spec/support/sample_restaurants_transformed.json'))
+
+      resturants_transformed.each do |restaurant|
+        restaurant.symbolize_keys!
+        restaurant[:meta_data].symbolize_keys!
+      end
+    end
 
     it "transforms the elements of the raw resturants array and populates the class's restaurants array" do
       expect(example_resturants_raw.size).to eq(2)

@@ -2,7 +2,14 @@ require 'zomato/syncer'
 require 'rails_helper'
 
 RSpec.describe Zomato::Syncer do
-  let(:example_restaurants) { JSON.parse(File.read('spec/support/sample_restaurants_transformed.json')).each(&:symbolize_keys!) }
+  let(:example_restaurants) do
+    resturants_transformed = JSON.parse(File.read('spec/support/sample_restaurants_transformed.json'))
+
+    resturants_transformed.each do |restaurant|
+      restaurant.symbolize_keys!
+      restaurant[:meta_data].symbolize_keys!
+    end
+  end
 
   subject { Zomato::Syncer.new(example_restaurants) }
 
@@ -18,18 +25,32 @@ RSpec.describe Zomato::Syncer do
     let(:example_restaurants_hash) { example_restaurants.first }
 
     context 'when a restaurant with the same zomato_restaurant_id does not exist' do
-      it 'creates it' do
+      it 'creates the restaurant' do
         expect{ subject.send(:sync_restaurant, example_restaurants_hash) }.to change{ Restaurant.all.size }.from(0).to(1)
+      end
+
+      it 'creates the zomato_metadata for the restaurant' do
+        expect{ subject.send(:sync_restaurant, example_restaurants_hash) }.to change{ ZomatoMetadata.all.size }.from(0).to(1)
       end
     end
 
     context 'when a restaurant with the same zomato_restaurant_id exists' do
-      it "updates it's attributes" do
-        moshe_restaurant = create(:restaurant, zomato_restaurant_id: example_restaurants_hash[:zomato_restaurant_id], name: 'Moshe restaurant')
+      it'updates the restauran' do
+        moshe_restaurant = create(:restaurant_with_zomato_metadata, name: 'Moshe restaurant', zomato_restaurant_id: example_restaurants_hash[:meta_data][:zomato_restaurant_id])
 
         expect{ subject.send(:sync_restaurant, example_restaurants_hash) }.not_to change{ Restaurant.all.size }
 
         expect(moshe_restaurant.reload.name).to eq(example_restaurants_hash[:name])
+      end
+
+      it "updates the restaurant's zomato_metadata" do
+        expected_rating = BigDecimal(example_restaurants_hash[:meta_data][:rating])
+
+        restaurant = create(:restaurant_with_zomato_metadata, zomato_restaurant_id: example_restaurants_hash[:meta_data][:zomato_restaurant_id], zomato_rating: 3)
+
+        expect{ subject.send(:sync_restaurant, example_restaurants_hash) }.not_to change{ ZomatoMetadata.all.size }
+
+        expect(restaurant.reload.zomato_metadata.rating).to eq(expected_rating)
       end
     end
 

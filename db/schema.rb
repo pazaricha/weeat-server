@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_10_071756) do
+ActiveRecord::Schema.define(version: 2018_05_13_105757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,6 @@ ActiveRecord::Schema.define(version: 2018_05_10_071756) do
     t.integer "maximum_delivery_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "zomato_restaurant_id"
-    t.decimal "zomato_rating", precision: 2, scale: 1, default: "0.0"
-    t.decimal "weeat_rating", precision: 2, scale: 1, default: "0.0"
-    t.index ["zomato_restaurant_id"], name: "index_restaurants_on_zomato_restaurant_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -38,6 +34,16 @@ ActiveRecord::Schema.define(version: 2018_05_10_071756) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
+  end
+
+  create_table "zomato_metadata", force: :cascade do |t|
+    t.decimal "rating", precision: 2, scale: 1, default: "0.0"
+    t.integer "votes", default: 0
+    t.integer "zomato_restaurant_id"
+    t.integer "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_zomato_metadata_on_restaurant_id", unique: true
   end
 
 end

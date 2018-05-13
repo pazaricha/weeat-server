@@ -8,7 +8,7 @@ task :import_restaurants_from_zomato, [:city_id] => [:environment] do |_t, args|
   puts 'importing restaurants from zomato...'
 
   restaurants_hashes = Zomato::Client.new(city_id: city_id).search_restaurants
-
+  binding.pry
   puts 'restaurants imported, syncing started...'
 
   Zomato::Syncer.new(restaurants_hashes).sync
