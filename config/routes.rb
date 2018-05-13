@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'cuisines/index'
   resources :restaurants, only: [:index, :show, :create] do
     resources :reviews, only: [:create]
   end
