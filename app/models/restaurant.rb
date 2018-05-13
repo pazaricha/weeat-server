@@ -24,15 +24,7 @@ class Restaurant < ApplicationRecord
   has_one :zomato_metadata, dependent: :destroy
   belongs_to :cuisine
 
-  def recalculate_ratings!
-    self.rating = if zomato_metadata.present? && zomato_metadata.votes > 0
-                    ((zomato_metadata.votes * zomato_metadata.rating) + (reviews.sum(:rating) * reviews.size)) / (zomato_metadata.votes + reviews.size)
-                  elsif reviews.present?
-                    reviews.sum(:rating) / BigDecimal(reviews.size)
-                  else
-                    0
-                  end
-
-    save!
+  def recalculate_rating!
+    update(rating: RatingCalculator.new(id).calculate)
   end
 end

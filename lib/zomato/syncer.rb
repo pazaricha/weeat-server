@@ -35,7 +35,7 @@ module Zomato
       Restaurant.transaction do
         new_restaurant = Restaurant.create!(restaurant_hash)
         ZomatoMetadata.create!(zomato_metadata.merge(restaurant_id: new_restaurant.id))
-        new_restaurant.recalculate_ratings!
+        new_restaurant.recalculate_rating!
       end
     end
 
@@ -43,7 +43,7 @@ module Zomato
       Restaurant.transaction do
         existing_restaurant.update!(restaurant_hash)
         existing_restaurant.zomato_metadata.update!(zomato_metadata)
-        existing_restaurant.recalculate_ratings!
+        existing_restaurant.recalculate_rating!
       end
     end
   end

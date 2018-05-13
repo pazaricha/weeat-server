@@ -20,12 +20,12 @@ class Review < ApplicationRecord
   validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   belongs_to :restaurant
 
-  after_create :recalculate_restaurant_ratings
-  after_destroy :recalculate_restaurant_ratings
+  after_create :recalculate_restaurant_rating!
+  after_destroy :recalculate_restaurant_rating!
 
   private
 
-  def recalculate_restaurant_ratings
-    restaurant.recalculate_ratings!
+  def recalculate_restaurant_rating!
+    restaurant.recalculate_rating!
   end
 end
