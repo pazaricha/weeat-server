@@ -25,6 +25,6 @@ class Restaurant < ApplicationRecord
   belongs_to :cuisine
 
   def recalculate_rating!
-    update(rating: RatingCalculator.new(id).calculate)
+    update(rating: RatingCalculator.calculate(self))
   end
 end
