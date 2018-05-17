@@ -43,6 +43,8 @@ module Zomato
         restaurants << {
           name: real_restaurant['name'],
           address: real_restaurant['location']['address'],
+          latitude: real_restaurant['location']['latitude'],
+          longitude: real_restaurant['location']['longitude'],
           maximum_delivery_time: ENV['DELIVERY_TIMES'].split(', ').sample,
           cuisine: real_restaurant['cuisines'].split(', ').first,
           meta_data: {
