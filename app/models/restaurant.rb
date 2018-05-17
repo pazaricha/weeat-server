@@ -4,7 +4,8 @@
 #
 #  id                    :bigint(8)        not null, primary key
 #  address               :text
-#  cuisine               :string
+#  latitude              :float
+#  longitude             :float
 #  maximum_delivery_time :integer
 #  name                  :string
 #  rating                :decimal(2, 1)    default(0.0)
@@ -25,6 +26,6 @@ class Restaurant < ApplicationRecord
   belongs_to :cuisine
 
   def recalculate_rating!
-    update(rating: RatingCalculator.new(id).calculate)
+    update(rating: RatingCalculator.calculate(self))
   end
 end

@@ -2,6 +2,8 @@
   {
     "name": "Katz's Delicatessen",
     "address": "205 East Houston Street, New York 10002",
+    "latitude": "40.7223277778",
+    "longitude": "-73.9873500000",
     "maximum_delivery_time": "15",
     "cuisine": "Sandwich",
     "meta_data": {
@@ -13,6 +15,8 @@
   {
     "name": "Shake Shack",
     "address": "Madison Square Park, 23rd & Madison, New York 10010",
+    "latitude": "40.7408681000",
+    "longitude": "-73.9879841000",
     "maximum_delivery_time": "15",
     "cuisine": "American",
     "meta_data": {
