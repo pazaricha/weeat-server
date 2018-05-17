@@ -14,5 +14,12 @@ task :import_restaurants_from_zomato, [:city_id] => [:environment] do |_t, args|
 
   puts 'syncning done'
 
-  puts 'Done!'
+  if Restaurant.where(tenbis: true).present?
+    puts 'Done!'
+  else
+    puts 'now randomly setting 25 restaurants "tenbis" to true'
+
+    random_restaurants_ids = Restaurant.all.limit(100).pluck(:id).sample(50)
+    Restaurant.where(id: random_restaurants_ids).update_all(tenbis: true)
+  end
 end
